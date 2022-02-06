@@ -4,6 +4,9 @@ import random
 import numpy as np
 import pickle
 
+#i used these functions to process the raw images. The result of this process is saved in the text files trainingValues and trainingResults
+
+resolution = 50
 def loadData(noOfImgs):
     
     dataSet=[]
@@ -33,8 +36,7 @@ def loadData(noOfImgs):
                 
     return dataSet
 
-def createDataSet(ratio):
-
+def createDataSet():
 
     DataSet=[]
     
@@ -58,6 +60,9 @@ def createDataSet(ratio):
     trainingValues = np.array(Values)
 
     trainingValues= trainingValues/255#makes all pixel values between 0 and 1 (helps to increase training speed if training values are closer together)
-    testValues= testValues/255
     
-    return trainingResults, trainingValues, testResults, testValues
+    with open("trainingValues.txt", "wb") as file:
+        pickle.dump(trainingValues, file)
+    
+    with open("trainingResults.txt", "wb") as file:
+        pickle.dump(trainingResults, file)

@@ -41,13 +41,15 @@ class ImageClassificationModel():
 		self.model.fit(X, Y, batch_size = batchsize, epochs= epochs, callbacks = [tb], validation_split = validationSplit)
 		self.model.save(self.name)
 
+# a CNN takes tensors of shape (image_height, image_width, color_channels), ignoring the batch size so need to reshape your images
+# colour channels would = 1 if greyscale and = 3 if rgb.
 with open("trainingValues.txt", "rb") as file:
 	trainingValues = pickle.load(file)
 
 with open("trainingResults.txt", "rb") as file:
 	trainingResults = pickle.load(file)
 
-for i in range(1,5):
+for i in range(1,5): # loop over different configurations of network. add more if you want to change 
 	for j in range(1,4):
 		model = ImageClassificationModel(i, j*16, (3,3),0,0, trainingValues.shape[1:],2)
 		model.train(trainingValues,trainingResults,0.1,32,10)
